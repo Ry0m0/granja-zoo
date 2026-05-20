@@ -1,46 +1,53 @@
 package com.zoo.granjazoo.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "especies")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Especie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false, unique = true)
-    private String nombre;              // Nombre de la especie
-
-    private String reino;               // Reino (animal, vegetal, etc.)
-
-    private String habitat;             // Habitat natural
-
-    @Column(name = "en_peligro")
-    private Boolean enPeligroExtincion; // En peligro de extincion o no
-
-    @OneToMany(mappedBy = "especie", cascade = CascadeType.ALL, orphanRemoval = true)
+    
+    private String nombre;      // Nombre de la especie
+    private String reino;       // Reino (animal, vegetal)
+    private String habitat;     // Hábitat natural
+    private Boolean peligro;    // En peligro de extinción
+    
+    // Relación OneToMany: una especie tiene muchos animales
+    @OneToMany(mappedBy = "especie", cascade = CascadeType.ALL)
     private List<Animal> animales = new ArrayList<>();
 
-    // Metodo auxiliar para agregar un animal
-    public void addAnimal(Animal animal) {
-        animales.add(animal);
-        animal.setEspecie(this);
+    // Constructor vacío (necesario para JPA)
+    public Especie() {}
+    
+    // Constructor con parámetros
+    public Especie(String nombre, String reino, String habitat, Boolean peligro) {
+        this.nombre = nombre;
+        this.reino = reino;
+        this.habitat = habitat;
+        this.peligro = peligro;
     }
 
-    // Metodo auxiliar para eliminar un animal
-    public void removeAnimal(Animal animal) {
-        animales.remove(animal);
-        animal.setEspecie(null);
-    }
+    // Getters y Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+    
+    public String getReino() { return reino; }
+    public void setReino(String reino) { this.reino = reino; }
+    
+    public String getHabitat() { return habitat; }
+    public void setHabitat(String habitat) { this.habitat = habitat; }
+    
+    public Boolean getPeligro() { return peligro; }
+    public void setPeligro(Boolean peligro) { this.peligro = peligro; }
+    
+    public List<Animal> getAnimales() { return animales; }
+    public void setAnimales(List<Animal> animales) { this.animales = animales; }
 }
