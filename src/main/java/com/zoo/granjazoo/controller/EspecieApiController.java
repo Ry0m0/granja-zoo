@@ -40,8 +40,8 @@ public class EspecieApiController {
     // POST /api/especies
     @PostMapping
     public ResponseEntity<Especie> crear(@RequestBody Especie especie) {
-        Especie nueva = service.guardar(especie);
-        return ResponseEntity.status(HttpStatus.CREATED).body(nueva);
+        service.guardar(especie);
+        return ResponseEntity.status(HttpStatus.CREATED).body(especie);
     }
 
     // PUT /api/especies/{id}
@@ -53,7 +53,8 @@ public class EspecieApiController {
         existente.setReino(especie.getReino());
         existente.setHabitat(especie.getHabitat());
         existente.setPeligro(especie.getPeligro());
-        return ResponseEntity.ok(service.guardar(existente));
+        service.guardar(existente);
+        return ResponseEntity.ok(existente);
     }
 
     // PATCH /api/especies/{id}
@@ -65,7 +66,8 @@ public class EspecieApiController {
         if (especie.getReino() != null) existente.setReino(especie.getReino());
         if (especie.getHabitat() != null) existente.setHabitat(especie.getHabitat());
         if (especie.getPeligro() != null) existente.setPeligro(especie.getPeligro());
-        return ResponseEntity.ok(service.guardar(existente));
+        service.guardar(existente);
+        return ResponseEntity.ok(existente);
     }
 
     // DELETE /api/especies/{id}

@@ -47,12 +47,12 @@ public class AnimalApiController {
     // POST /api/animales
     @PostMapping
     public ResponseEntity<Animal> crear(@RequestBody Animal animal) {
-        // Si viene especieId dentro del objeto especie, lo asignamos
         if (animal.getEspecie() != null && animal.getEspecie().getId() != null) {
             Especie especie = especieService.obtener(animal.getEspecie().getId());
             animal.setEspecie(especie);
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(animalService.guardar(animal));
+        animalService.guardar(animal);
+        return ResponseEntity.status(HttpStatus.CREATED).body(animal);
     }
 
     // PUT /api/animales/{id}
@@ -68,7 +68,8 @@ public class AnimalApiController {
         if (animal.getEspecie() != null && animal.getEspecie().getId() != null) {
             existente.setEspecie(especieService.obtener(animal.getEspecie().getId()));
         }
-        return ResponseEntity.ok(animalService.guardar(existente));
+        animalService.guardar(existente);
+        return ResponseEntity.ok(existente);
     }
 
     // PATCH /api/animales/{id}
@@ -84,7 +85,8 @@ public class AnimalApiController {
         if (animal.getEspecie() != null && animal.getEspecie().getId() != null) {
             existente.setEspecie(especieService.obtener(animal.getEspecie().getId()));
         }
-        return ResponseEntity.ok(animalService.guardar(existente));
+        animalService.guardar(existente);
+        return ResponseEntity.ok(existente);
     }
 
     // DELETE /api/animales/{id}
