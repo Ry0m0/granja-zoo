@@ -33,24 +33,8 @@ Incluye API REST (`@RestController`) e interfaz web con Thymeleaf (`@Controller`
 
 - Java 17+
 - Maven 3.9+
-- MySQL 8.0
 
----
-
-## 🗄️ Configurar base de datos
-
-Abrir MySQL y ejecutar:
-
-```sql
-CREATE DATABASE granjazoo;
-```
-
-Editar `src/main/resources/application.properties` si tu contraseña es diferente:
-
-```properties
-spring.datasource.username=root
-spring.datasource.password=TU_CONTRASEÑA
-```
+> ✅ No requiere instalar ninguna base de datos. El proyecto usa **H2** (base de datos en memoria), que se inicia automáticamente.
 
 ---
 
@@ -62,6 +46,19 @@ mvn spring-boot:run
 ```
 
 Abrir en el navegador: **http://localhost:8080/especies**
+
+---
+
+## 🗄️ Consola H2 (base de datos)
+
+Puedes ver los datos directamente en:  
+**http://localhost:8080/h2-console**
+
+| Campo | Valor |
+|-------|-------|
+| JDBC URL | `jdbc:h2:mem:granjazoo` |
+| Username | `sa` |
+| Password | *(vacío)* |
 
 ---
 
@@ -112,36 +109,6 @@ Abrir en el navegador: **http://localhost:8080/especies**
 | PATCH | `/api/animales/{id}` | Actualizar parcial |
 | DELETE | `/api/animales/{id}` | Eliminar animal |
 
-### Ejemplo POST crear especie
-
-```json
-POST /api/especies
-Content-Type: application/json
-
-{
-  "nombre": "León",
-  "reino": "Animalia",
-  "habitat": "Sabana africana",
-  "peligro": false
-}
-```
-
-### Ejemplo POST crear animal
-
-```json
-POST /api/animales
-Content-Type: application/json
-
-{
-  "nombre": "Simba",
-  "sexo": "M",
-  "fechaNacimiento": "2020-03-15",
-  "peso": 190.5,
-  "recinto": "Zona Norte",
-  "especie": { "id": 1 }
-}
-```
-
 ---
 
 ## 🏗️ Estructura del proyecto
@@ -163,16 +130,6 @@ src/main/java/com/zoo/granjazoo/
 │   ├── EspecieApiController.java   (REST API)
 │   └── AnimalApiController.java    (REST API)
 └── GranjaZooApplication.java
-
-src/main/resources/
-├── templates/
-│   ├── especies/
-│   │   ├── lista.html
-│   │   └── formulario.html
-│   └── animales/
-│       ├── lista.html
-│       └── formulario.html
-└── application.properties
 ```
 
 ---
